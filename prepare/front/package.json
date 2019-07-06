@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nuxtjs/axios": "^5.5.4",
+    "@nuxtjs/vuetify": "^0.5.6",
     "nuxt": "^2.8.1",
     "vue": "^2.6.10",
     "vuetify": "^1.5.16"
