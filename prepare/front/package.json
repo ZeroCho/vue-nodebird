@@ -10,13 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@nuxtjs/axios": "^5.5.4",
-    "@nuxtjs/vuetify": "^0.5.6",
+    "@nuxtjs/vuetify": "^1.2.1",
     "nuxt": "^2.8.1",
     "vue": "^2.6.10",
-    "vuetify": "^1.5.16"
+    "vuetify": "^2.0.5"
   },
   "devDependencies": {
-    "eslint": "^6.0.1",
+    "eslint": "^6.1.0",
     "eslint-plugin-vue": "^5.2.3"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-toolbar dark color="green">
       <v-toolbar-items>
         <v-toolbar-title :style="{ display: 'flex', alignItems: 'center' }">
@@ -21,11 +21,12 @@
         <nuxt />
       </v-flex>
     </v-layout>
-  </div>
+  </v-app>
 </template>
 
 <script>
-  import LoginForm from '../components/LoginForm';
+  import 'vuetify/dist/vuetify.min.css';
+  import LoginForm from '~/components/LoginForm';
 
   export default {
     components: {
