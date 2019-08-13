@@ -1,30 +1,58 @@
 <template>
   <v-container>
-    <v-flex v-for="p in posts" xs12 style="margin-bottom: 20px">
-      <v-card>
-        <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-          aspect-ratio="2"
-        />
-        <v-card-title primary-title>
-          <div>
-            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-            <div> 12345 </div>
-          </div>
-        </v-card-title>
-        <v-card-actions>
-          <v-btn flat color="orange">Share</v-btn>
-          <v-btn flat color="orange">Explore</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
+    <post-card v-for="p in posts" :key="p.title" :post="p" />
   </v-container>
 </template>
 <script>
+  import PostCard from '../components/PostCard';
+
   export default {
+    components: {
+      PostCard,
+    },
     data() {
       return {
-        posts: [1, 2, 3, 4, 5],
+        posts: [{
+          content: 'abcdef',
+          User: {
+            nickname: '제로초',
+          },
+          Images: [{
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }],
+        }, {
+          content: 'awefafds',
+          User: {
+            nickname: '제로초',
+          },
+        }, {
+          content: 'vafwaefwa',
+          User: {
+            nickname: '제로초',
+          },
+          Images: [{
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }, {
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }],
+        }, {
+          content: 'qweqrtq',
+          User: {
+            nickname: '제로초',
+          },
+          Images: [{
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }, {
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }, {
+            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
+          }],
+        }, {
+          content: 'jrqwrqw',
+          User: {
+            nickname: '제로초',
+          },
+        }],
       };
     },
     methods: {},

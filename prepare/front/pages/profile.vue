@@ -12,10 +12,19 @@
         수정
       </v-btn>
     </v-form>
+    <v-subheader>팔로잉</v-subheader>
+    <follow-list />
+    <v-subheader>팔로워</v-subheader>
+    <follow-list />
   </v-container>
 </template>
 <script>
+  import FollowList from '../components/FollowList';
+
   export default {
+    components: {
+      FollowList,
+    },
     data() {
       return {
         valid: false,
@@ -28,7 +37,7 @@
     methods: {
       onChangeNickname() {
 
-      }
+      },
     },
     head() {
       return {

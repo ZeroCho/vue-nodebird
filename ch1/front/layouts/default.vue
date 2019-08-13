@@ -1,21 +1,19 @@
 <template>
-  <v-app>
+  <div>
     <v-toolbar dark color="green">
       <v-toolbar-items>
         <v-toolbar-title :style="{ display: 'flex', alignItems: 'center' }">
-          <nuxt-link to="/">
-            NodeBird
-          </nuxt-link>
+          <nuxt-link to="/">NodeBird</nuxt-link>
         </v-toolbar-title>
-        <v-btn flat nuxt to="/profile" :style="{ display: 'flex', alignItems: 'center' }">
+        <v-btn text nuxt to="/profile" :style="{ display: 'flex', alignItems: 'center' }">
           <div>프로필</div>
         </v-btn>
-        <v-btn flat nuxt to="/signup" :style="{ display: 'flex', alignItems: 'center' }">
+        <v-btn text nuxt to="/signup" :style="{ display: 'flex', alignItems: 'center' }">
           <div>회원가입</div>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-layout row wrap>
+    <v-layout>
       <v-flex xs12 md4>
         <login-form />
       </v-flex>
@@ -23,7 +21,7 @@
         <nuxt />
       </v-flex>
     </v-layout>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -32,15 +30,6 @@
   export default {
     components: {
       LoginForm,
-    },
-    head() {
-      return {
-        meta: [
-          { charset: 'UTF-8' },
-          { name: 'viewport', content: 'width=device-width,initial-scale=1.0' },
-        ],
-        title: 'NodeBird',
-      };
     },
   };
 </script>
