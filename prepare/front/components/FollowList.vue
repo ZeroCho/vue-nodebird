@@ -8,7 +8,7 @@
         <v-list-tile-title>{{ l.nickname }}</v-list-tile-title>
       </v-list-tile-content>
       <v-list-tile-action>
-        <v-icon @click="onRemoveUser(l.id)">remove_circle_outline</v-icon>
+        <v-icon @click="onRemoveUser(l.id)">mdi-minus-circle-outline</v-icon>
       </v-list-tile-action>
     </v-list-tile>
   </div>

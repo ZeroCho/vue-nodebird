@@ -2,31 +2,31 @@
   <v-flex xs12 style="margin-bottom: 20px">
     <v-card>
       <post-images :images="post.Images || []" />
-      <v-card-title primary-title>
+      <v-card-text>
         <div>
           <h3 class="headline mb-0">{{post.User.nickname}}</h3>
           <div>{{post.content}}</div>
         </div>
-      </v-card-title>
+      </v-card-text>
       <v-card-actions>
-        <v-btn flat color="orange">
-          <v-icon>share</v-icon>
+        <v-btn text color="orange">
+          <v-icon>mdi-twitter-retweet</v-icon>
         </v-btn>
-        <v-btn flat color="orange">
-          <v-icon>thumb_up</v-icon>
+        <v-btn text color="orange">
+          <v-icon>mdi-heart-outline</v-icon>
         </v-btn>
-        <v-btn flat color="orange" @click="onToggleComment">
-          <v-icon>comment</v-icon>
+        <v-btn text color="orange" @click="onToggleComment">
+          <v-icon>mdi-comment-outline</v-icon>
         </v-btn>
-        <v-menu open-on-hover top offset-y>
+        <v-menu offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn flat color="orange">
-              <v-icon>more_horiz</v-icon>
+            <v-btn text color="orange">
+              <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </template>
           <div>
             <v-btn color="red">삭제</v-btn>
-            <v-btn flat color="orange">수정</v-btn>
+            <v-btn text color="orange">수정</v-btn>
           </div>
         </v-menu>
       </v-card-actions>
@@ -59,6 +59,9 @@
       PostImages,
       CommentForm,
     },
+    props: {
+      post: Object,
+    },
     data() {
       return {
         commentOpened: false,
@@ -75,9 +78,6 @@
             comment: '나는 짱이다!!!!',
           }],
       };
-    },
-    props: {
-      post: Object,
     },
     methods: {
       onToggleComment() {

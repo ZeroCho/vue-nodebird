@@ -31,7 +31,7 @@
       @click="zoomImages"
     />
     <div style="flex: 1;align-items: center;justify-content: center;display:flex" @click="zoomImages">
-      <v-icon>more_horiz</v-icon>
+      <v-icon>mdi-dots-horizontal</v-icon>
     </div>
     <image-zoom v-if="imageZoomed" :images="images" :close-modal="closeModal" />
   </div>

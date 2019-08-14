@@ -1,36 +1,40 @@
 <template>
   <v-container>
-    <v-form ref="form" @submit.prevent="onSubmitForm" v-model="valid">
-      <v-text-field
-        v-model="email"
-        label="이메일"
-        type="email"
-        :rules="emailRules"
-        required
-      />
-      <v-text-field
-        v-model="password"
-        label="비밀번호"
-        type="password"
-        :rules="passwordRules"
-        required
-      />
-      <v-btn
-        class="white--text"
-        color="green"
-        type="submit"
-        :disabled="!valid"
-      >
-        로그인
-      </v-btn>
-      <v-btn
-        nuxt
-        to="/signup"
-        type="submit"
-      >
-        회원가입
-      </v-btn>
-    </v-form>
+    <v-card>
+      <v-form ref="form" @submit.prevent="onSubmitForm" v-model="valid">
+        <v-container>
+          <v-text-field
+            v-model="email"
+            label="이메일"
+            type="email"
+            :rules="emailRules"
+            required
+          />
+          <v-text-field
+            v-model="password"
+            label="비밀번호"
+            type="password"
+            :rules="passwordRules"
+            required
+          />
+          <v-btn
+            class="white--text"
+            color="green"
+            type="submit"
+            :disabled="!valid"
+          >
+            로그인
+          </v-btn>
+          <v-btn
+            nuxt
+            to="/signup"
+            type="submit"
+          >
+            회원가입
+          </v-btn>
+        </v-container>
+      </v-form>
+    </v-card>
   </v-container>
 </template>
 

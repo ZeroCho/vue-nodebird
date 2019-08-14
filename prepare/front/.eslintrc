@@ -11,6 +11,8 @@
     "plugin:vue/recommended"
   ],
   "rules": {
-    "vue/max-attributes-per-line": "off"
+    "vue/max-attributes-per-line": "off",
+    "vue/mustache-interpolation-spacing": "off",
+    "vue/singleline-html-element-content-newline": "off"
   }
 }
