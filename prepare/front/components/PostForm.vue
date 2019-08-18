@@ -14,8 +14,11 @@
           :rules="[v => !!v.trim() || '내용을 입력하세요']"
           @input="onChangeTextarea"
         />
-        <v-btn>이미지 업로드</v-btn>
         <v-btn color="primary" type="submit" absolute right>짹짹</v-btn>
+        <v-btn>이미지 업로드</v-btn>
+        <v-col col="2">
+          <v-checkbox v-model="fakeImage" row label="이미지" />
+        </v-col>
       </v-form>
     </v-container>
   </v-card>
@@ -30,6 +33,7 @@
         success: false,
         successMessages: '',
         hideDetails: true,
+        fakeImage: false,
       };
     },
     computed: {
@@ -43,10 +47,13 @@
           this.hideDetails = true;
           this.success = false;
           this.successMessages = '';
+        } else {
+          this.hideDetails = false;
         }
       },
       onSubmitForm() {
         if (this.$refs.form.validate()) {
+          const images = this.fakeImage ? [{ src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg' }]: [];
           this.$store.dispatch('posts/add', {
             id: Date.now(),
             content: this.content,
@@ -54,6 +61,7 @@
               nickname: this.me.nickname,
             },
             Comments: [],
+            Images: images,
           })
             .then(() => {
               this.content = '';

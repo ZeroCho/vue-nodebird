@@ -18,15 +18,15 @@
         <v-btn text color="orange" @click="onToggleComment">
           <v-icon>mdi-comment-outline</v-icon>
         </v-btn>
-        <v-menu offset-y>
+        <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on }">
-            <v-btn text color="orange">
+            <v-btn text color="orange" v-on="on">
               <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </template>
-          <div>
-            <v-btn color="red">삭제</v-btn>
-            <v-btn text color="orange">수정</v-btn>
+          <div style="background: white">
+            <v-btn dark color="red" @click="onRemovePost">삭제</v-btn>
+            <v-btn text color="orange" @click="onEditPost">수정</v-btn>
           </div>
         </v-menu>
       </v-card-actions>
@@ -73,6 +73,14 @@
     methods: {
       onToggleComment() {
         this.commentOpened = !this.commentOpened;
+      },
+      onRemovePost() {
+        this.$store.dispatch('posts/remove', {
+          id: this.post.id,
+        });
+      },
+      onEditPost() {
+
       },
     },
   };
