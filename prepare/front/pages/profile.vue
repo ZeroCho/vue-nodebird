@@ -58,5 +58,6 @@
         title: '프로필 | NodeBird',
       };
     },
+    middleware: 'authenticated',
   };
 </script>

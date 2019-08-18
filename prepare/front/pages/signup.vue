@@ -78,7 +78,12 @@
           this.$store.dispatch('users/signUp', {
             email: this.email,
             nickname: this.nickname,
-          });
+          })
+            .then(() => {
+              this.$router.push({
+                path: '/'
+              })
+            });
         }
       },
     },
@@ -87,6 +92,7 @@
         title: '회원가입 | NodeBird',
       };
     },
+    middleware: 'anonymous',
   };
 </script>
 
