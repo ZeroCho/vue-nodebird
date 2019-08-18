@@ -73,8 +73,13 @@
     },
     methods: {
       onSubmitForm() {
-        this.$refs.form.validate();
-        console.log(this.valid);
+        console.log(this, this.$refs.form.validate());
+        if (this.$refs.form.validate()) {
+          this.$store.dispatch('users/signUp', {
+            email: this.email,
+            nickname: this.nickname,
+          });
+        }
       },
     },
     head() {

@@ -1,59 +1,25 @@
 <template>
   <v-container>
-    <post-card v-for="p in posts" :key="p.title" :post="p" />
+    <post-form v-if="me" />
+    <post-card v-for="p in mainPosts" :key="p.id" :post="p" />
   </v-container>
 </template>
 <script>
   import PostCard from '../components/PostCard';
+  import PostForm from '../components/PostForm';
 
   export default {
     components: {
+      PostForm,
       PostCard,
     },
-    data() {
-      return {
-        posts: [{
-          content: 'abcdef',
-          User: {
-            nickname: '제로초',
-          },
-          Images: [{
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }],
-        }, {
-          content: 'awefafds',
-          User: {
-            nickname: '제로초',
-          },
-        }, {
-          content: 'vafwaefwa',
-          User: {
-            nickname: '제로초',
-          },
-          Images: [{
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }, {
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }],
-        }, {
-          content: 'qweqrtq',
-          User: {
-            nickname: '제로초',
-          },
-          Images: [{
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }, {
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }, {
-            src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-          }],
-        }, {
-          content: 'jrqwrqw',
-          User: {
-            nickname: '제로초',
-          },
-        }],
-      };
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      },
+      mainPosts() {
+        return this.$store.state.posts.mainPosts;
+      }
     },
     methods: {},
     head() {

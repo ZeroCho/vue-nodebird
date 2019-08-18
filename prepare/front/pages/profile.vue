@@ -48,7 +48,9 @@
     },
     methods: {
       onChangeNickname() {
-
+        this.$store.dispatch('users/changeNickname', {
+          nickname: this.nickname,
+        });
       },
     },
     head() {

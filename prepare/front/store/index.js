@@ -1,9 +1,9 @@
 export const state = () => ({
-  counter: 0,
+  hello: 'vuex',
 });
 
-export const mutations = {
-  increment(state) {
-    state.count++;
-  },
-};
+export const mutations = () => ({
+  bye(state) {
+    state.hello = 'goodbye';
+  }
+});

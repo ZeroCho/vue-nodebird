@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <v-list-tile v-for="l in list" :key="l.nickname" avatar>
-      <v-list-tile-avatar color="indigo">
-        <span class="white--text headline">{{ l.nickname[0] }}</span>
-      </v-list-tile-avatar>
-      <v-list-tile-content>
-        <v-list-tile-title>{{ l.nickname }}</v-list-tile-title>
-      </v-list-tile-content>
-      <v-list-tile-action>
-        <v-icon @click="onRemoveUser(l.id)">mdi-minus-circle-outline</v-icon>
-      </v-list-tile-action>
-    </v-list-tile>
-  </div>
+  <v-list>
+    <v-col v-for="l in list" :key="l.nickname" cols="12" md="4" style="display: inline-block">
+      <v-list-item>
+        <v-list-item-avatar color="indigo">
+          <span class="white--text headline">{{ l.nickname[0] }}</span>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>{{ l.nickname }}</v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-icon @click="onRemoveUser(l.id)">mdi-minus-circle-outline</v-icon>
+        </v-list-item-action>
+      </v-list-item>
+    </v-col>
+  </v-list>
 </template>
 
 <script>

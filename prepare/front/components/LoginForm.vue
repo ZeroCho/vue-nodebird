@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card v-if="!me">
       <v-form ref="form" @submit.prevent="onSubmitForm" v-model="valid">
         <v-container>
           <v-text-field
@@ -35,6 +35,12 @@
         </v-container>
       </v-form>
     </v-card>
+    <v-card v-else>
+      <v-container>
+        {{me.nickname}} 로그인됨
+        <v-btn @click="onLogOut">로그아웃</v-btn>
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 
@@ -54,10 +60,22 @@
         ],
       };
     },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      },
+    },
     methods: {
       onSubmitForm() {
-        this.$refs.form.validate();
-        console.log(this.valid);
+        if (this.$refs.form.validate()) {
+          this.$store.dispatch('users/logIn', {
+            email: this.email,
+            nickname: '제로초',
+          });
+        }
+      },
+      onLogOut() {
+        this.$store.dispatch('users/logOut');
       },
     },
   };
