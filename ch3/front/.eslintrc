@@ -1,0 +1,19 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/recommended"
+  ],
+  "plugins": [],
+  "rules": {
+    "vue/mustache-interpolation-spacing": "off",
+    "vue/max-attributes-per-line": "off",
+    "vue/singleline-html-element-content-newline": "off"
+  }
+}
