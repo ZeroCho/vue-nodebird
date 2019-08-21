@@ -2,11 +2,13 @@
   <v-flex xs12 style="margin-bottom: 20px">
     <v-card>
       <post-images :images="post.Images || []" />
+      <v-card-title>
+        <h3 class="headline mb-0">
+          <nuxt-link :to="'/user/' + post.User.id">{{post.User.nickname}}</nuxt-link>
+        </h3>
+      </v-card-title>
       <v-card-text>
-        <div>
-          <h3 class="headline mb-0">{{post.User.nickname}}</h3>
-          <div>{{post.content}}</div>
-        </div>
+        <div>{{post.content}}</div>
       </v-card-text>
       <v-card-actions>
         <v-btn text color="orange">
@@ -69,6 +71,15 @@
       me() {
         return this.$store.state.users.me;
       },
+      hasMorePost() {
+        return this.$store.state.posts.hasMorePost;
+      },
+    },
+    mounted() {
+      window.addEventListener('scroll', this.onScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.onScroll);
     },
     methods: {
       onToggleComment() {
@@ -82,6 +93,20 @@
       onEditPost() {
 
       },
+      onScroll() {
+        if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+          if (this.hasMorePost) {
+            this.$store.dispatch('posts/loadPosts');
+          }
+        }
+      },
     },
   };
 </script>
+
+<style scoped>
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
