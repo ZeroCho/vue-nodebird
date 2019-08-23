@@ -1,32 +1,47 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+const passport = require('passport');
+const session = require('express-session');
+const cookie = require('cookie-parser');
+const morgan = require('morgan');
 
 const db = require('./models');
+const passportConfig = require('./passport');
+const userRouter = require('./routes/user');
 const app = express();
 
 db.sequelize.sync();
+passportConfig();
 
-app.use(cors('http://localhost:3000'));
+app.use(morgan('dev'));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookie('cookiesecret'));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: 'cookiesecret',
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res) => {
   res.status(200).send('안녕 제로초');
 });
 
-app.post('/user', async (req, res, next) => {
-  try {
-    const hash = await bcrypt.hash(req.body.password, 12);
-    const newUser = await db.User.create({
-      email: req.body.email,
-      password: hash,
-      nickname: req.body.nickname,
-    }); // HTTP STATUS CODE
-    res.status(201).json(newUser);
-  } catch (err) {
-    console.log(err);
-    next(err);
+app.use('/user', userRouter);
+
+app.post('/post', (req, res) => {
+  if (req.isAuthenticated()) {
+
   }
 });
 

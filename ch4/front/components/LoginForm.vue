@@ -59,7 +59,7 @@
         if (this.$refs.form.validate()) {
           this.$store.dispatch('users/logIn', {
             email: this.email,
-            nickname: '제로초',
+            password: this.password,
           });
         }
       },

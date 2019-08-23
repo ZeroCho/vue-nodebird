@@ -57,14 +57,41 @@ export const actions = {
       email: payload.email,
       nickname: payload.nickname,
       password: payload.password,
-    });
-    commit('setMe', payload);
+    }, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('setMe', res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   logIn({ commit }, payload) {
-    commit('setMe', payload);
+    this.$axios.post('http://localhost:3085/user/login', {
+      email: payload.email,
+      password: payload.password,
+    }, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('setMe', res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
-  logOut({ commit }, payload) {
-    commit('setMe', null);
+  logOut({ commit }) {
+    this.$axios.post('http://localhost:3085/user/logout', {}, {
+      withCredentials: true,
+    })
+      .then((data) => {
+        commit('setMe', null);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
   },
   changeNickname({ commit }, payload) {
     commit('changeNickname', payload);
