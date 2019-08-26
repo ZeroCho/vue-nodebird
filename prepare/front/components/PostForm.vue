@@ -15,10 +15,16 @@
           @input="onChangeTextarea"
         />
         <v-btn color="primary" type="submit" absolute right>짹짹</v-btn>
-        <v-btn>이미지 업로드</v-btn>
-        <v-col col="2">
-          <v-checkbox v-model="fakeImage" row label="이미지" />
-        </v-col>
+        <input ref="imageInput" type="file" hidden multiple @change="onChangeImages">
+        <v-btn @click="onClickImageUpload">이미지 업로드</v-btn>
+        <div>
+          <div v-for="(p, i) in imagePaths" :key="p" style="display: inline-block">
+            <img :src="`http://localhost:3085/${p}`" style="width: 200px" :alt="p" />
+            <div>
+              <button @click="onRemoveImage(i)" type="button">제거</button>
+            </div>
+          </div>
+        </div>
       </v-form>
     </v-container>
   </v-card>
@@ -39,6 +45,9 @@
     computed: {
       me() {
         return this.$store.state.users.me;
+      },
+      imagePaths() {
+        return this.$store.state.posts.imagePaths;
       },
     },
     methods: {
@@ -70,6 +79,20 @@
               this.successMessages = '게시되었습니다!';
             });
         }
+      },
+      onRemoveImage(index) {
+        this.$store.commit('posts/removeImagePath', index);
+      },
+      onClickImageUpload() {
+        this.$refs.imageInput.click();
+      },
+      onChangeImages(e) {
+        console.log(e.target.files, e.target.files.forEach);
+        const imageFormData = new FormData();
+        [].forEach.call(e.target.files, (f) => {
+          imageFormData.append('image', f);
+        });
+        this.$store.dispatch('posts/uploadImages', imageFormData);
       },
     },
   };

@@ -1,26 +1,21 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const AWS = require('aws-sdk');
-const multerS3 = require('multer-s3');
 
 const db = require('../models');
 const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
-AWS.config.update({
-  region: 'ap-northeast-2',
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-});
-
 const upload = multer({
-  storage: multerS3({
-    s3: new AWS.S3(),
-    bucket: 'react-nodebird',
-    key(req, file, cb) {
-      cb(null, `original/${+new Date()}${path.basename(file.originalname)}`);
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, 'uploads');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext); // 제로초.png, ext===.png, basename===제로초
+      done(null, basename + new Date().valueOf() + ext);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
@@ -76,39 +71,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
 
 router.post('/images', upload.array('image'), (req, res) => {
   console.log(req.files);
-  res.json(req.files.map(v => v.location));
-});
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    const post = await db.Post.findOne({
-      where: { id: req.params.id },
-      include: [{
-        model: db.User,
-        attributes: ['id', 'nickname'],
-      }, {
-        model: db.Image,
-      }],
-    });
-    res.json(post);
-  } catch (e) {
-    console.error(e);
-    next(e);
-  }
-});
-
-router.delete('/:id', isLoggedIn, async (req, res, next) => {
-  try {
-    const post = await db.Post.findOne({ where: { id: req.params.id } });
-    if (!post) {
-      return res.status(404).send('포스트가 존재하지 않습니다.');
-    }
-    await db.Post.destroy({ where: { id: req.params.id } });
-    res.send(req.params.id);
-  } catch (e) {
-    console.error(e);
-    next(e);
-  }
+  res.json(req.files.map(v => v.filename));
 });
 
 router.get('/:id/comments', async (req, res, next) => {
