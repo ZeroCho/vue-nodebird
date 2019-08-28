@@ -4,8 +4,19 @@
       <h1>상세 이미지</h1>
       <v-icon id="close-btn" @click="closeModal">mdi-close</v-icon>
     </header>
-    <div id="slick-wrapper">
-
+    <div id="carousel-wrapper">
+      <v-carousel
+        height="calc(100% - 44px)"
+      >
+        <v-carousel-item
+          v-for="img in images"
+          :key="img.src"
+        >
+          <v-sheet>
+            <v-img  max-height="500" contain :src="`http://localhost:3085/${img.src}`" />
+          </v-sheet>
+        </v-carousel-item>
+      </v-carousel>
     </div>
   </div>
 </template>
@@ -13,7 +24,14 @@
 <script>
   export default {
     props: {
-      closeModal: Function,
+      closeModal: {
+        type: Function,
+        required: true,
+      },
+      images: {
+        type: Array,
+        required: true,
+      },
     },
   };
 </script>
@@ -52,8 +70,12 @@
     cursor: pointer;
   }
 
-  #slick-wrapper {
+  #carousel-wrapper {
     height: calc(100% - 44px);
     background: #090909;
+  }
+
+  #carousel-wrapper > div {
+    height: auto !important;
   }
 </style>

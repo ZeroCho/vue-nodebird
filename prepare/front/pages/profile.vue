@@ -46,6 +46,10 @@
         ],
       };
     },
+    fetch({ store }) {
+      store.dispatch('users/loadFollowers');
+      return store.dispatch('users/loadFollowings');
+    },
     methods: {
       onChangeNickname() {
         this.$store.dispatch('users/changeNickname', {

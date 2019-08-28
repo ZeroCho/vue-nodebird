@@ -71,6 +71,15 @@
         terms: false,
       };
     },
+    watch: {
+      me(value) {
+        if (value) {
+          this.$router.push({
+            path: '/',
+          });
+        }
+      }
+    },
     methods: {
       onSubmitForm() {
         console.log(this, this.$refs.form.validate());
@@ -78,6 +87,7 @@
           this.$store.dispatch('users/signUp', {
             email: this.email,
             nickname: this.nickname,
+            password: this.password,
           })
             .then(() => {
               this.$router.push({

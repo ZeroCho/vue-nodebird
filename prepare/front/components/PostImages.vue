@@ -2,22 +2,25 @@
   <div v-if="images.length === 0"></div>
   <div v-else-if="images.length === 1">
     <v-img
-      :src="images[0].src"
+      :src="`http://localhost:3085/${images[0].src}`"
       aspect-ratio="2"
+      contain
       @click="zoomImages"
     />
     <image-zoom v-if="imageZoomed" :images="images" :close-modal="closeModal" />
   </div>
   <div v-else-if="images.length === 2" style="display: flex">
     <v-img
-      :src="images[0].src"
+      :src="`http://localhost:3085/${images[0].src}`"
       aspect-ratio="2"
+      contain
       style="flex: 1"
       @click="zoomImages"
     />
     <v-img
-      :src="images[1].src"
+      :src="`http://localhost:3085/${images[1].src}`"
       aspect-ratio="2"
+      contain
       style="flex: 1"
       @click="zoomImages"
     />
@@ -26,8 +29,9 @@
   <div v-else style="display: flex">
     <v-img
       style="flex: 1"
-      :src="images[0].src"
+      :src="`http://localhost:3085/${images[0].src}`"
       aspect-ratio="2"
+      contain
       @click="zoomImages"
     />
     <div style="flex: 1;align-items: center;justify-content: center;display:flex" @click="zoomImages">

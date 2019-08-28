@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" style="position: relative" @submit.prevent="onSubmitForm" >
     <v-textarea
-      v-model="value"
+      v-model="content"
       filled
       label="댓글 달기"
       auto-grow
@@ -25,7 +25,7 @@
     data() {
       return {
         valid: false,
-        value: '',
+        content: '',
         success: false,
         successMessages: '',
         hideDetails: true,
@@ -47,15 +47,11 @@
       onSubmitForm() {
         if (this.$refs.form.validate()) {
           this.$store.dispatch('posts/addComment', {
-            id: Date.now(),
             postId: this.postId,
-            content: this.value,
-            User: {
-              nickname: this.me.nickname,
-            },
+            content: this.content,
           })
             .then(() => {
-              this.value = '';
+              this.content = '';
               this.success = true;
               this.successMessages = '댓글이 작성되었습니다.';
               this.hideDetails = false;

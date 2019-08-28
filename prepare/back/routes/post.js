@@ -23,7 +23,7 @@ const upload = multer({
 
 router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST /api/post
   try {
-    const hashtags = req.body.content.match(/#[^\s]+/g);
+    const hashtags = req.body.content.match(/#[^\s#]+/g);
     const newPost = await db.Post.create({
       content: req.body.content, // ex) '제로초 파이팅 #구독 #좋아요 눌러주세요'
       UserId: req.user.id,
@@ -66,6 +66,20 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
   } catch (e) {
     console.error(e);
     next(e);
+  }
+});
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await db.Post.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.send('삭제했습니다.');
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 });
 
