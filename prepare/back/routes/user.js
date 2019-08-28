@@ -44,7 +44,24 @@ router.post('/', async (req, res, next) => { // 회원가입
           console.error(err);
           return next(err);
         }
-        return res.json(user);
+        const fullUser = await db.User.findOne({
+          where: { id: user.id },
+          attributes: ['id', 'email', 'nickname'],
+          include: [{
+            model: db.Post,
+            as: 'Posts',
+            attributes: ['id'],
+          }, {
+            model: db.User,
+            as: 'Followings',
+            attributes: ['id'],
+          }, {
+            model: db.User,
+            as: 'Followers',
+            attributes: ['id'],
+          }],
+        });
+        return res.json(fullUser);
       });
     })(req, res, next);
   } catch (err) {
@@ -67,7 +84,24 @@ router.post('/login', (req, res, next) => {
         console.error(err);
         return next(err);
       }
-      return res.json(user);
+      const fullUser = await db.User.findOne({
+        where: { id: user.id },
+        attributes: ['id', 'email', 'nickname'],
+        include: [{
+          model: db.Post,
+          as: 'Posts',
+          attributes: ['id'],
+        }, {
+          model: db.User,
+          as: 'Followings',
+          attributes: ['id'],
+        }, {
+          model: db.User,
+          as: 'Followers',
+          attributes: ['id'],
+        }],
+      });
+      return res.json(fullUser);
     });
   })(req, res, next);
 });
@@ -113,12 +147,12 @@ router.get('/:id', async (req, res, next) => { // 남의 정보 가져오는 것
 router.get('/:id/followings', isLoggedIn, async (req, res, next) => { // /api/user/:id/followings
   try {
     const user = await db.User.findOne({
-      where: { id: parseInt(req.params.id, 10) || (req.user && req.user.id) || 0 },
+      where: { id: req.params.id },
     });
     const followers = await user.getFollowings({
       attributes: ['id', 'nickname'],
-      limit: parseInt(req.query.limit, 10),
-      offset: parseInt(req.query.offset, 10),
+      limit: parseInt(req.query.limit || 3, 10),
+      offset: parseInt(req.query.offset || 0, 10),
     });
     res.json(followers);
   } catch (e) {
@@ -130,12 +164,12 @@ router.get('/:id/followings', isLoggedIn, async (req, res, next) => { // /api/us
 router.get('/:id/followers', isLoggedIn, async (req, res, next) => { // /api/user/:id/followers
   try {
     const user = await db.User.findOne({
-      where: { id: parseInt(req.params.id, 10) || (req.user && req.user.id) || 0 },
-    }); // req.params.id가 문자열 '0'
+      where: { id: req.params.id },
+    });
     const followers = await user.getFollowers({
       attributes: ['id', 'nickname'],
-      limit: parseInt(req.query.limit, 10),
-      offset: parseInt(req.query.offset, 10),
+      limit: parseInt(req.query.limit || 3, 10),
+      offset: parseInt(req.query.offset || 0, 10),
     });
     res.json(followers);
   } catch (e) {

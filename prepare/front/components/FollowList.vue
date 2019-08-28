@@ -18,20 +18,14 @@
 
 <script>
   export default {
-    data() {
-      return {
-        list: [{
-          nickname: '제로초',
-        }, {
-          nickname: '네로',
-        }, {
-          nickname: '히어로',
-        }],
-      };
-    },
-    methods: {
-      onRemoveUser(id) {
-        console.log(id);
+    props: {
+      list: {
+        type: Array,
+        required: true,
+      },
+      onRemoveUser: {
+        type: Function,
+        required: true,
       },
     },
   };

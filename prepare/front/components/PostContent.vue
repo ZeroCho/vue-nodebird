@@ -4,8 +4,8 @@
     <v-card-title>
       <h3 class="headline mb-0">
         <nuxt-link :to="'/user/' + post.User.id">{{post.User.nickname}}</nuxt-link>
-        <v-btn v-if="!followed && me" small @click="onFollow">팔로우</v-btn>
-        <v-btn v-else-if="followed && me" small @click="onUnfollow">언팔로우</v-btn>
+        <v-btn v-if="canFollow && me" small @click="onFollow">팔로우</v-btn>
+        <v-btn v-else-if="canUnfollow && me" small @click="onUnfollow">언팔로우</v-btn>
       </h3>
     </v-card-title>
     <v-card-text>
@@ -30,9 +30,12 @@
       me() {
         return this.$store.state.users.me;
       },
-      followed() {
-        return this.me && this.me.Followings && this.me.Followings.find(v => v.id === this.post.User.id)
-      }
+      canFollow() {
+        return this.me && this.post.User.id !== this.me.id && !this.me.Followings.find(v => v.id === this.post.User.id);
+      },
+      canUnfollow() {
+        return this.me && this.post.User.id !== this.me.id && this.me.Followings.find(v => v.id === this.post.User.id);
+      },
     },
     methods: {
       onFollow() {

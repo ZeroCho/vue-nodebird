@@ -17,17 +17,17 @@ export const mutations = {
   follow(state, payload) {
     state.me.Followings.push({ id: payload.userId });
   },
-  unfollow(state, payload) {
-    const index = state.me.Followings.findIndex(v => v.id === payload.userId);
-    state.me.Followings.splice(index, 1);
-  },
   removeFollower(state, payload) {
-    const index = state.followerList.findIndex(v => v.id === payload.id);
+    let index = state.followerList.findIndex(v => v.id === payload.userId);
     state.followerList.splice(index, 1);
+    index = state.me.Followers.findIndex(v => v.id === payload.userId);
+    state.me.Followers.splice(index, 1);
   },
   removeFollowing(state, payload) {
-    const index = state.followingList.findIndex(v => v.id === payload.id);
+    let index = state.followingList.findIndex(v => v.id === payload.userId);
     state.followingList.splice(index, 1);
+    index = state.me.Followings.findIndex(v => v.id === payload.userId);
+    state.me.Followings.splice(index, 1);
   },
   loadFollowings(state, payload) {
     state.followingList = state.followingList.concat(payload);
@@ -95,7 +95,15 @@ export const actions = {
 
   },
   changeNickname({ commit }, payload) {
-    commit('changeNickname', payload);
+    this.$axios.patch(`/user/nickname`, { nickname: payload.nickname }, {
+      withCredentials: true,
+    })
+      .then(() => {
+        commit('changeNickname', payload);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   follow({ commit }, payload) {
     this.$axios.post(`/user/${payload.userId}/follow`, {}, {
@@ -115,7 +123,7 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        commit('unfollow', {
+        commit('removeFollowing', {
           userId: payload.userId,
         });
       })
@@ -123,21 +131,43 @@ export const actions = {
         console.error(err);
       });
   },
-  removeFollowing({ commit }, payload) {
-    // 비동기 요청
-    commit('removeFollowing', payload);
-  },
-  removeFollower({ commit }, payload) {
-    commit('removeFollower', payload);
-  },
   loadFollowers({ commit, state }, payload) {
     if (state.hasMoreFollower) {
-      commit('loadFollowers');
+      this.$axios.get(`/user/${state.me.id}/followers?limit=3&offset=${state.followerList.length}`, {
+        withCredentials: true,
+      })
+        .then((res) => {
+          commit('loadFollowers', res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   },
   loadFollowings({ commit, state }, payload) {
     if (state.hasMoreFollowing) {
-      commit('loadFollowings');
+      this.$axios.get(`/user/${state.me.id}/followings?limit=3&offset=${state.followingList.length}`, {
+        withCredentials: true,
+      })
+        .then((res) => {
+          commit('loadFollowings', res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
+  },
+  banFollower({ commit }, payload) {
+    this.$axios.delete(`/user/${payload.userId}/follower`, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('removeFollower', {
+          userId: payload.userId,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 };
