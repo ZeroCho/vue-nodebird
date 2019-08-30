@@ -15,8 +15,11 @@
         return this.$store.state.posts.mainPosts;
       },
     },
-    fetch({ store }) {
-      store.dispatch('posts/loadPosts');
+    fetch({ store, params }) {
+      return store.dispatch('posts/loadHashtagPosts',  {
+        hashtag: params.id,
+        reset: true,
+      });
     },
     methods: {},
     head() {

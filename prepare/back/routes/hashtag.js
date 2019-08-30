@@ -1,28 +1,31 @@
 const express = require('express');
-
 const db = require('../models');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => { // GET /posts?offset=10&limit=10
+router.get('/:tag', async (req, res, next) => {
   try {
     let where = {};
     if (parseInt(req.query.lastId, 10)) {
       where = {
         id: {
-          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), // less than
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
         },
       };
     }
     const posts = await db.Post.findAll({
       where,
       include: [{
+        model: db.Hashtag,
+        where: { name: decodeURIComponent(req.params.tag) },
+      }, {
         model: db.User,
         attributes: ['id', 'nickname'],
       }, {
         model: db.Image,
       }, {
         model: db.User,
+        through: 'Like',
         as: 'Likers',
         attributes: ['id'],
       }, {
@@ -36,13 +39,12 @@ router.get('/', async (req, res, next) => { // GET /posts?offset=10&limit=10
         }],
       }],
       order: [['createdAt', 'DESC']],
-      limit: parseInt(req.query.limit, 10) || 10,
+      limit: parseInt(req.query.limit, 10),
     });
-    console.log(posts.length);
     res.json(posts);
-  } catch (err) {
-    console.error(err);
-    next(err);
+  } catch (e) {
+    console.error(e);
+    next(e);
   }
 });
 

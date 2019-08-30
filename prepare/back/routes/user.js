@@ -257,4 +257,30 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.get('/:id/posts', async (req, res, next) => {
+  try {
+    const posts = await db.Post.findAll({
+      where: {
+        UserId: parseInt(req.params.id, 10) || (req.user && req.user.id) || 0,
+        RetweetId: null,
+      },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: db.Image,
+      }, {
+        model: db.User,
+        through: 'Like',
+        as: 'Likers',
+        attributes: ['id'],
+      }],
+    });
+    res.json(posts);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
 module.exports = router;

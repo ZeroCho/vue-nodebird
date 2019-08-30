@@ -25,7 +25,7 @@
       <v-card style="margin-bottom: 20px">
         <v-container>
           <v-subheader>팔로워</v-subheader>
-          <follow-list :abc="abc" :users="followerList" :remove="removeFollower" />
+          <follow-list :users="followerList" :remove="removeFollower" />
           <v-btn @click="loadMoreFollowers" v-if="hasMoreFollower" dark color="blue" style="width: 100%">더보기</v-btn>
         </v-container>
       </v-card>

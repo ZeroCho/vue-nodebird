@@ -19,13 +19,15 @@
     <v-card style="margin-bottom: 20px">
       <v-container>
         <v-subheader>팔로잉</v-subheader>
-        <follow-list :list="followingList" :on-remove-user="onUnfollow" />
+        <follow-list :list="followingList" :on-remove-user="removeFollowing" />
+        <v-btn v-if="hasMoreFollowing" dark color="blue" style="width: 100%" @click="loadMoreFollowings" >더보기</v-btn>
       </v-container>
     </v-card>
     <v-card style="margin-bottom: 20px">
       <v-container>
         <v-subheader>팔로워</v-subheader>
-        <follow-list :list="followerList" :on-remove-user="onBanFollower" />
+        <follow-list :list="followerList" :on-remove-user="removeFollower" />
+        <v-btn v-if="hasMoreFollower" dark color="blue" style="width: 100%" @click="loadMoreFollowers" >더보기</v-btn>
       </v-container>
     </v-card>
   </v-container>
@@ -53,10 +55,16 @@
       followingList() {
         return this.$store.state.users.followingList;
       },
+      hasMoreFollowing() {
+        return this.$store.state.users.hasMoreFollowing;
+      },
+      hasMoreFollower() {
+        return this.$store.state.users.hasMoreFollower;
+      },
     },
     fetch({ store }) {
-      store.dispatch('users/loadFollowers');
-      return store.dispatch('users/loadFollowings');
+      store.dispatch('users/loadFollowers', { offset: 0 });
+      return store.dispatch('users/loadFollowings', { offset: 0 });
     },
     methods: {
       onChangeNickname() {
@@ -69,10 +77,17 @@
           userId: id,
         });
       },
-      onBanFollower(id) {
-        this.$store.dispatch('users/banFollower', {
-          userId: id,
-        });
+      removeFollowing(userId) {
+        this.$store.dispatch('users/unfollow', { userId });
+      },
+      removeFollower(userId) {
+        this.$store.dispatch('users/removeFollower', { userId });
+      },
+      loadMoreFollowers() {
+        this.$store.dispatch('users/loadFollowers');
+      },
+      loadMoreFollowings() {
+        this.$store.dispatch('users/loadFollowings');
       },
     },
     head() {

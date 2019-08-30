@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.5.4",
     "@nuxtjs/vuetify": "^1.2.1",
+    "lodash.throttle": "^4.1.1",
     "nuxt": "^2.8.1",
     "vue": "^2.6.10",
     "vue-virtual-scroll-list": "^1.4.2",
