@@ -110,7 +110,15 @@ export const actions = {
 
   },
   changeNickname({ commit }, payload) {
-    commit('changeNickname', payload);
+    this.$axios.patch(`/user/nickname`, { nickname: payload.nickname }, {
+      withCredentials: true,
+    })
+      .then(() => {
+        commit('changeNickname', payload);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   addFollowing({ commit }, payload) {
     commit('addFollowing', payload);
