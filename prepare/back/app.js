@@ -18,7 +18,7 @@ passportConfig();
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: 'http://localhost:3080',
+  origin: 'http://localhost:3081',
   credentials: true,
 }));
 app.use('/', express.static('uploads'));

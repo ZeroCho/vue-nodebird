@@ -17,7 +17,7 @@ passportConfig();
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: 'http://localhost:3080',
+  origin: 'http://localhost:3081',
   credentials: true,
 }));
 app.use('/', express.static('uploads'));
@@ -43,12 +43,6 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/posts', postsRouter);
-
-app.post('/post', (req, res) => {
-  if (req.isAuthenticated()) {
-
-  }
-});
 
 app.listen(3085, () => {
   console.log(`백엔드 서버 ${3085}번 포트에서 작동중.`);

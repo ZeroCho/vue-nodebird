@@ -153,38 +153,46 @@ export const actions = {
       });
   },
   loadFollowers({ commit, state }, payload) {
-    if (state.hasMoreFollower) {
-      const offset = payload && payload.offset === 0 ? 0 : state.followerList.length;
-      return this.$axios.get(`/user/${state.me.id}/followers?limit=3&offset=${offset}`, {
-        withCredentials: true,
-      })
-        .then((res) => {
-          commit('loadFollowers', {
-            data: res.data,
-            offset,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    if (!(payload && payload.offset === 0) && !state.hasMoreFollower) {
+      return;
     }
+    let offset = state.followerList.length;
+    if (payload && payload.offset === 0) {
+      offset = 0;
+    }
+    return this.$axios.get(`/user/${state.me.id}/followers?limit=3&offset=${offset}`, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('loadFollowers', {
+          data: res.data,
+          offset,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   loadFollowings({ commit, state }, payload) {
-    if (state.hasMoreFollowing) {
-      const offset = payload && payload.offset === 0 ? 0 : state.followingList.length;
-      return this.$axios.get(`/user/${state.me.id}/followings?limit=3&offset=${offset}`, {
-        withCredentials: true,
-      })
-        .then((res) => {
-          commit('loadFollowings', {
-            data: res.data,
-            offset,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    if (!(payload && payload.offset === 0) && !state.hasMoreFollowing) {
+      return;
     }
+    let offset = state.followingList.length;
+    if (payload && payload.offset === 0) {
+      offset = 0;
+    }
+    return this.$axios.get(`/user/${state.me.id}/followings?limit=3&offset=${offset}`, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('loadFollowings', {
+          data: res.data,
+          offset,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
   removeFollower({ commit }, payload) {
     this.$axios.delete(`/user/${payload.userId}/follower`, {

@@ -23,7 +23,7 @@
   "license": "ISC",
   "config": {
     "nuxt": {
-      "port": "3080"
+      "port": "3081"
     }
   }
 }

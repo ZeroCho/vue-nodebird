@@ -63,6 +63,7 @@
       },
     },
     fetch({ store }) {
+      console.log('fetch');
       store.dispatch('users/loadFollowers', { offset: 0 });
       return store.dispatch('users/loadFollowings', { offset: 0 });
     },
