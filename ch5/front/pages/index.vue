@@ -33,7 +33,7 @@
       }
     },
     fetch({ store }) {
-      return store.dispatch('posts/loadPosts');
+      return store.dispatch('posts/loadPosts', { reset: true });
     },
     mounted() {
       window.addEventListener('scroll', this.onScroll);

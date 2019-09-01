@@ -8,7 +8,6 @@
 
 <script>
   import PostCard from '~/components/PostCard';
-  import PostForm from '~/components/PostForm';
 
   export default {
     components: {
@@ -20,18 +19,15 @@
       };
     },
     computed: {
-      me() {
-        return this.$store.state.users.me;
-      },
       mainPosts() {
         return this.$store.state.posts.mainPosts;
       },
-      hasMorePost() {
-        return this.$store.state.posts.hasMorePost;
-      }
     },
-    fetch({ store }) {
-      store.dispatch('posts/loadPosts');
+    fetch({ store, params }) {
+      return store.dispatch('posts/loadHashtagPosts', {
+        hashtag: encodeURIComponent(params.id),
+        reset: true,
+      });
     },
     mounted() {
       window.addEventListener('scroll', this.onScroll);
