@@ -50,6 +50,9 @@ export const mutations = {
     const userIndex = state.mainPosts[index].Likers.findIndex(v => v.id === payload.userId);
     state.mainPosts[index].Likers.splice(userIndex, 1);
   },
+  loadPost(state, payload) {
+    state.mainPosts = [payload];
+  },
 };
 
 export const actions = {
@@ -103,6 +106,15 @@ export const actions = {
       })
       .catch(() => {
 
+      });
+  },
+  loadPost({ commit }, payload) {
+    return this.$axios.get(`/post/${payload}`)
+      .then((res) => {
+        commit('loadPost', res.data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   },
   loadPosts: throttle(function({ commit, state }, payload) {

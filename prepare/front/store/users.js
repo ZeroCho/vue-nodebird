@@ -2,7 +2,7 @@ export const state = () => ({
   me: null, // 내 정보
   followingList: [], // 팔로잉 리스트
   followerList: [], // 팔로워 리스트
-  userInfo: null, // 남의 정보
+  other: null, // 남의 정보
   hasMoreFollower: true,
   hasMoreFollowing: true,
 });
@@ -12,7 +12,7 @@ export const mutations = {
     state.me = payload;
   },
   setOther(state, payload) {
-    state.userInfo = payload;
+    state.other = payload;
   },
   changeNickname(state, payload) {
     state.me.nickname = payload.nickname;
