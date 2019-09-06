@@ -22,6 +22,7 @@
           <template v-else>{{node}}</template>
         </template>
       </div>
+      <div>{{$moment(post.createdAt).fromNow()}}</div>
     </v-card-text>
   </div>
 </template>

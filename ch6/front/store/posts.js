@@ -25,6 +25,9 @@ export const mutations = {
     const index = state.mainPosts.findIndex(v => v.id === payload.PostId);
     state.mainPosts[index].Comments.unshift(payload);
   },
+  loadPost(state, payload) {
+    state.mainPosts = [payload];
+  },
   loadPosts(state, payload) {
     if (payload.reset) {
       state.mainPosts = payload.data;
@@ -105,7 +108,15 @@ export const actions = {
         console.error(err);
       });
   },
-  loadPosts: throttle(async function({ commit, state }, payload) {
+  async loadPost({ commit, state }, payload) {
+    try {
+      const res = await this.$axios.get(`/post/${payload}`);
+      commit('loadPost', res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  loadPosts: throttle(async function ({ commit, state }, payload) {
     console.log('loadPosts');
     try {
       if (payload && payload.reset) {
@@ -128,7 +139,7 @@ export const actions = {
       console.error(err);
     }
   }, 2000),
-  loadUserPosts: throttle(async function({ commit, state }, payload) {
+  loadUserPosts: throttle(async function ({ commit, state }, payload) {
     try {
       if (payload && payload.reset) {
         const res = await this.$axios.get(`/user/${payload.userId}/posts?limit=10`);
@@ -150,7 +161,7 @@ export const actions = {
       console.error(err);
     }
   }, 2000),
-  loadHashtagPosts: throttle(async function({ commit, state }, payload) {
+  loadHashtagPosts: throttle(async function ({ commit, state }, payload) {
     try {
       if (payload && payload.reset) {
         const res = await this.$axios.get(`/hashtag/${payload.hashtag}?limit=10`);
