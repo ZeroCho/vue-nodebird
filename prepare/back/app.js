@@ -48,6 +48,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
+    domain: prod && '.nodebird.com',
   },
 }));
 app.use(passport.initialize());
