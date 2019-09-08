@@ -11,7 +11,7 @@
           :key="img.src"
         >
           <v-sheet>
-            <v-img max-height="500" contain :src="`http://localhost:3085/${img.src}`" />
+            <v-img max-height="500" contain :src="img.src" />
           </v-sheet>
         </v-carousel-item>
       </v-carousel>
