@@ -168,3 +168,5 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+vue-nodebird.pem

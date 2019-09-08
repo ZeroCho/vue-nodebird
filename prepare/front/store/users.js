@@ -57,9 +57,7 @@ export const actions = {
       const res = await this.$axios.get('/user', {
         withCredentials: true,
       });
-      console.log(res.data);
       commit('setMe', res.data);
-      console.log(state);
     } catch (err) {
       console.error(err);
     }
@@ -67,16 +65,14 @@ export const actions = {
   async loadOther({ state, commit }, payload) {
     try {
       const res = await this.$axios.get(`/user/${payload.userId}`);
-      console.log(res.data);
       commit('setOther', res.data);
-      console.log(state);
     } catch (err) {
       console.error(err);
     }
   },
   signUp({ commit, state }, payload) {
     this.$axios.post('/user', {
-      email: payload.email,
+      userId: payload.userId,
       nickname: payload.nickname,
       password: payload.password,
     }, {
@@ -91,7 +87,7 @@ export const actions = {
   },
   logIn({ commit }, payload) {
     this.$axios.post('/user/login', {
-      email: payload.email,
+      userId: payload.userId,
       password: payload.password,
     }, {
       withCredentials: true,
