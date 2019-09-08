@@ -41,8 +41,8 @@ module.exports = {
     },
   },
   axios: {
-    browserBaseURL: 'http://localhost:3085',
-    baseURL: 'http://localhost:3085',
+    browserBaseURL: 'http://api.nodebird.com',
+    baseURL: 'http://api.nodebird.com',
     https: false,
   },
   server: {
