@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
+    "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production PORT=80 pm2 start server.js",
     "lint": "eslint */**"
   },
