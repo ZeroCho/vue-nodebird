@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "cross-env PORT=80 pm2 start npm --name \"nuxt\" -- start",
+    "start": "cross-env PORT=80 nuxt start",
     "lint": "eslint */**"
   },
   "author": "",
