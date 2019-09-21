@@ -170,3 +170,4 @@ typings/
 .dynamodb/
 
 vue-nodebird.pem
+uploads
