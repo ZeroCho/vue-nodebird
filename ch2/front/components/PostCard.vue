@@ -1,7 +1,7 @@
 <template>
   <div style="margin-bottom: 20px">
     <v-card>
-      <v-image />
+      <v-img />
       <v-card-text>
         <div>
           <h3>{{post.User.nickname}}</h3>
