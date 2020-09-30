@@ -1,6 +1,6 @@
 <template>
   <v-card style="margin-bottom: 20px">
-    <v-image />
+    <v-img />
     <v-card-text>
       <div>
         <h3>ZeroCho</h3>
