@@ -35,6 +35,11 @@
     components: {
       LoginForm,
     },
+    head() {
+      return {
+        title: 'NodeBird',
+      };
+    },
   };
 </script>
 

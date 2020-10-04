@@ -1,24 +1,22 @@
 <template>
-  <v-list-tile>
-    <ul>
-      <li>
-        <span>제로초</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
-      </li>
-      <li>
-        <span>네로</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
-      </li>
-      <li>
-        <span>히어로</span>
-        <v-icon>mdi-minus-circle-outline</v-icon>
-      </li>
-    </ul>
-  </v-list-tile>
+  <v-list>
+    <v-list-item>
+      <span>제로초</span>
+      <v-icon>mdi-minus-circle-outline</v-icon>
+    </v-list-item>
+    <v-list-item>
+      <span>네로</span>
+      <v-icon>mdi-minus-circle-outline</v-icon>
+    </v-list-item>
+    <v-list-item>
+      <span>히어로</span>
+      <v-icon>mdi-minus-circle-outline</v-icon>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script>
-  export default {}
+export default {};
 </script>
 
 <style>

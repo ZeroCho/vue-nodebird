@@ -32,6 +32,11 @@
   import LoginForm from '~/components/LoginForm';
 
   export default {
+    head() {
+      return {
+        title: 'NodeBird',
+      };
+    },
     components: {
       LoginForm,
     },

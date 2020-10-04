@@ -56,7 +56,12 @@
         });
         this.hashtag = '';
       },
-    }
+    },
+    head() {
+      return {
+        title: 'NodeBird',
+      };
+    },
   };
 </script>
 
