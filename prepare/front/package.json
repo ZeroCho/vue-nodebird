@@ -24,7 +24,7 @@
     "pm2": "^3.5.1",
     "vue": "^2.6.10",
     "vue-virtual-scroll-list": "^1.4.2",
-    "vuetify": "^2.0.14"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
